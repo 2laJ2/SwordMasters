@@ -2,7 +2,7 @@
 
 The ancient martial art of iaido dates back to about 1200 ad. The origin of iaido lies in the battle skills of the samurai. In 1600 ad the Tokugawa leasu united Japan and became Shogun, which greatly reduced the power of the local warlords or Daimyo. Many of the samurai had to begin to make a living by teaching sword skills to the sons of the aristocrats.
 
-## This website app is a tool to learn the complex lineages of Eishinryu from Hayashizaki Jinsuke Minamoto no Shigenobu (1542-1621) to present day.
+### This website app is a tool to learn the complex lineages of Eishinryu from Hayashizaki Jinsuke Minamoto no Shigenobu (1542-1621) to present day.
 
 #### Features of this app include:
 
