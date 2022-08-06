@@ -1,0 +1,16 @@
+body {
+    margin: auto;
+    max-width: 45em;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #00FFFF;
+}
+
+table {
+    width: 80%;
+}
+
+td, th {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
