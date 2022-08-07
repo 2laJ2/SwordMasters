@@ -1,6 +1,25 @@
 {% extends "layout.html" %}
-{% block title %}Front page{% endblock %}
 {% block content %}
-<h2>Choose deck:</h2>
-<a href="/">Front page</a>
+
+<h2>Deck: {{ name }}</h2>
+
+<ul>
+<li> Author: {{ creator }}
+<li> Cards: {{ size }}
+</ul>
+
+{% if session.user_id %}
+<p><a href="/play/{{ id }}">Start game</a></p>
+
+<h3>My statistics</h3>
+
+<ul>
+<li>You've played <b>{{ total }}</b> cards
+<li>Correct answers <b>{{ correct }}</b> times
+<li>Incorrects answers <b>{{ total - correct }}</b> times
+</ul>
+{% endif %}
+
+<p><a href="/">Front page</a></p>
+
 {% endblock %}

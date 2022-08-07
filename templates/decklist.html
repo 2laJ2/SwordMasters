@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Front page{% endblock %}
+{% block content %}
+
+<h2>Choose deck:</h2>
+<p>
+<ul>
+{% for deck in decks %}
+<li><a href="/deck/{{ deck.id }}">{{ deck.name }}</a>
+{% endfor %}
+</ul>
+
+<h3>Teacher's options:</h3>
+<ul> 
+<li><a href="/add">Make a new deck</a>
+<li> <a href="/remove">Remove a deck</a>
+<li> <a href="/stats">Show progress</a>   
+</ul>
+
+<a href="/">Front page</a>
+{% endblock %}

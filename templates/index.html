@@ -4,9 +4,9 @@
 <h2>Please log in here:</h2>
 {% if session.username %}
 <p>You have logged in as {{ session.username }}</p>
-<a href="/deck">Decks</a>
-<a href="/explore">Explore</a>
-<a href="/logout">Log out</a>
+<h3><a href="/decklist">Decks</a></h1><h3>
+<h3><a href="/explore">Explore</a></h3>
+<h3><a href="/logout">Log out</a></h3>
 {% else %}
 <form action="/login" method="POST">
 <p>Username:<br>

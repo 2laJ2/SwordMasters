@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Compose a new deck</h2>
+
+<form action="/add" method="post">
+<p>Name your deck:<br>
+<input type="text" name="name" minlength="1" maxlength="25"></p>
+
+<p>Questions and answers:<br>
+<textarea name="words" rows="8" cols="40" maxlength="10000">
+20;Kono Minoru Hyakuren
+21;Fukui Torao
+22;Ikeda Takashi Seiko
+</textarea></p>
+
+<input type="submit" value="Submit">
+
+</form>
+
+<p>
+<a href="/">Front page</a>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Remove a deck</h2>
+
+<form action="/remove" method="post">
+
+<p>Which deck you would like to remove?</p>
+
+{% for deck in list %}
+
+<input type="radio" name="deck" value="{{ deck.id }}"> {{ deck.name }} <br>
+
+{% endfor %}
+
+<p>
+
+<input type="submit" value="Remove">
+
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+</form>
+
+<p><a href="/">Front page</a>
+
+{% endblock %}
