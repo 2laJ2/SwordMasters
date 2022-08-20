@@ -2,5 +2,20 @@
 {% block title %}Front page{% endblock %}
 {% block content %}
 <h2>Explore lineages:</h2>
-<a href="/">Front page</a>
+{% if session.user_id %}
+<form action="/event" method="post">
+
+<p>Which Soke would you like to know more about?
+<br>
+<input type="text" name="answer">
+</p>
+
+<input type="submit" value="Submit">
+<br>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+</form>
+
+{% endif %}
+<br><a href="/">Front page</a>
 {% endblock %}

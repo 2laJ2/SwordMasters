@@ -1,11 +1,27 @@
 {% extends "layout.html" %}
 {% block title %}Front page{% endblock %}
 {% block content %}
-<h2>The Game (under construction):</h2>
 {% if session.user_id %}
-<p><a href="/play/{{ id }}">Start game</a></p>
+
+<h2>Next card</h2>
+
+<form action="/result" method="post">
+
+<p>Who is the <b>{{ question }}</b>th Soke of the <br><b>{{ name }}</b> lineage?
+
+<br>
+<input type="text" name="answer">
+</p>
+<input type="hidden" name="deck_id" value="{{ deck_id }}">
+<input type="hidden" name="card_id" value="{{ card_id }}">
+
+<input type="submit" value="Submit">
+<br>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+</form>
+
+
 {% endif %}
-
-
 <a href="/">Front page</a>
 {% endblock %}

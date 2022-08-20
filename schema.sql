@@ -26,3 +26,9 @@ CREATE TABLE answers (
     sent_at TIMESTAMP,
     result INTEGER
 );
+
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    word2 TEXT,
+    life TEXT
+);

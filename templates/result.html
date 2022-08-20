@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Result</h2>
+
+You gave the name <b>{{ answer }}</b> for the <b>{{ question }}</b>th Soke of the <b>{{ name }}</b> lineage.
+<p>
+
+{% if answer == correct %}
+Excellent, that is the correct answer!
+{% else %}
+Wrong answer! The correct name of the <b>{{ question }}</b>th Soke is <b>{{ correct }}</b>.
+{% endif %}
+
+<p>
+<a href="/play/{{ deck_id }}">Continue the game</a> |
+<a href="/deck/{{ deck_id }}">Go back</a>
+
+{% endblock %}

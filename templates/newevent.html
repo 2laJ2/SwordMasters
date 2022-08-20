@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Front page{% endblock %}
+{% block content %}
+<h2>Explore lineages:</h2>
+{% if session.user_id %}
+<h2>Add a new event</h2>
+
+<form action="/newevent" method="post">
+<p>Name of the Soke:<br>
+<input type="text" name="name" minlength="1" maxlength="25"></p>
+    
+<p>Life events:<br>
+<textarea name="words" rows="8" cols="40" maxlength="10000">
+Life events.
+</textarea></p>
+    
+<input type="submit" value="Submit">
+    
+</form>
+{% endif %}
+<br><a href="/">Front page</a>
+{% endblock %}

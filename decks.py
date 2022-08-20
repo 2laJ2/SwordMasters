@@ -1,4 +1,7 @@
 from random import randint
+
+from flask import render_template
+from sqlalchemy import false, null
 from db import db
 
 def get_all_decks():
@@ -59,4 +62,19 @@ def send_answer(card_id, answer, user_id):
     sql = """INSERT INTO answers (user_id, card_id, sent_at, result)
              VALUES (:user_id, :card_id, NOW(), :result)"""
     db.session.execute(sql, {"user_id":user_id, "card_id":card_id, "result":result})
+    db.session.commit()
+
+def get_event(name):
+    sql = "SELECT EXISTS(SELECT life FROM events WHERE word2=:soke)"
+    result = db.session.execute(sql, {"soke":name}).fetchone()[0]
+    if result == 0:
+        return "Not found"
+    sql = "SELECT life FROM events WHERE word2=:soke"
+    result = db.session.execute(sql, {"soke":name}).fetchone()[0]
+    return result
+
+def add_event(name, event):
+    sql = """INSERT INTO events (word2, life)
+                 VALUES (:word2, :life)"""
+    db.session.execute(sql, {"word2":name, "life":event})
     db.session.commit()
