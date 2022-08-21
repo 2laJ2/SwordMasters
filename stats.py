@@ -12,10 +12,10 @@ def get_full_stats(user_id):
 
     data = []
     for deck in decks:
-        sql = """SELECT u.name, COUNT(*), COALESCE(SUM(a.result),0)
+        sql = """SELECT u.username, COUNT(*), COALESCE(SUM(a.result),0)
                  FROM answers a, cards c, users u
                  WHERE c.deck_id=:deck_id AND a.card_id=c.id AND u.id=a.user_id
-                 GROUP BY u.id, u.name ORDER BY u.name"""
+                 GROUP BY u.id, u.username ORDER BY u.username"""
         results = db.session.execute(sql, {"deck_id": deck[0]}).fetchall()
         data.append((deck[1], results))
 

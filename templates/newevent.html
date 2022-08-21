@@ -3,15 +3,15 @@
 {% block content %}
 <h2>Explore lineages:</h2>
 {% if session.user_id %}
-<h2>Add a new event</h2>
+<h2>Add a new person or event</h2>
 
 <form action="/newevent" method="post">
-<p>Name of the Soke:<br>
+<p>Name of the person or event:<br>
 <input type="text" name="name" minlength="1" maxlength="25"></p>
     
-<p>Life events:<br>
+<p>Add history of the person or event:<br>
 <textarea name="words" rows="8" cols="40" maxlength="10000">
-Life events.
+Very exciting events.
 </textarea></p>
     
 <input type="submit" value="Submit">

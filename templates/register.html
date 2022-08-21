@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Register a new user</h2>
+
+<form action="/register" method="post">
+Username: <br><input type="text" name="username">
+<p>
+Password: <br><input type="password" name="password1">
+<p>
+Confirm password: <br><input type="password" name="password2">
+<p>
+User role:
+<select name="role">
+<option value=1> student
+<option value=2> teacher
+</select>
+<p>
+<input type="submit" value="Create user">
+</form>
+
+<p>
+<a href="/">Go back</a>
+
+{% endblock %}

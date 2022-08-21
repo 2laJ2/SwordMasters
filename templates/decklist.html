@@ -9,7 +9,7 @@
 <li><a href="/deck/{{ deck.id }}">{{ deck.name }}</a>
 {% endfor %}
 </ul>
-
+{% if session.user_role == 2%}
 <h3>Teacher's options:</h3>
 <ul> 
 <li><a href="/add">Make a new deck</a>
@@ -17,6 +17,6 @@
 <li> <a href="/stats">Show progress</a>
 <li> <a href="/addevent">Add an event</a>
 </ul>
-
+{% endif %}
 <a href="/">Front page</a>
 {% endblock %}
