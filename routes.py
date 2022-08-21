@@ -29,7 +29,7 @@ def login():
             session["username"] = username
             session["user_id"] = user[0]
             session["user_role"] = user[2]
-            session["crf_token"] = os.urandom(16).hex()
+            session["csrf_token"] = os.urandom(16).hex()
             return render_template("index.html")
         else:
             # invalid password
@@ -71,7 +71,7 @@ def register():
             return render_template("error.html", message="Registering unsuccessful")
         session["user_id"] = newuser[0]
         session["user_role"] = newuser[2]
-        session["crf_token"] = os.urandom(16).hex()
+        session["csrf_token"] = os.urandom(16).hex()
         return render_template("index.html")       
 
 @app.route("/logout")
@@ -95,7 +95,7 @@ def add_deck():
     if request.method == "GET":
         return render_template("add.html", message="")
     if request.method == "POST":
-        #users.check_crsf() # not working
+        users.check_csrf()
         name = request.form["name"]
         if len(name) < 1 or len(name) >25:
             return render_template("error.html", message="The deck name should consist of 1-25 characters")
@@ -114,7 +114,7 @@ def remove_deck():
         my_decks = decks.get_my_decks(users.user_id())# user specific - deck creator may remove
         return render_template("remove.html", list=my_decks)
     if request.method == "POST":
-        #users.check_csrf() # not working
+        users.check_csrf()
         if "deck" in request.form:
             deck = request.form["deck"]
             decks.remove_deck(deck, users.user_id())
@@ -138,7 +138,7 @@ def play(deck_id):
 @app.route("/result", methods=["post"])
 def result():
     users.require_role(1)
-    #users.check_csrf() # not working
+    users.check_csrf()
     deck_id = request.form["deck_id"]
     card_id = request.form["card_id"]
     info = decks.get_deck_info(deck_id) 
@@ -178,4 +178,3 @@ def show_stats():
     users.require_role(2)
     data = stats.get_full_stats(users.user_id())
     return render_template("stats.html", data=data)
-    #return render_template("error.html", message=data)#"This page is under construction")

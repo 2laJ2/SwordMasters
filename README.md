@@ -17,4 +17,4 @@ The app is available for testing in [Heroku](https://swordmasters.herokuapp.com/
 
 Any user can see all the decks created. Only teachers are able to create and remove decks, but may not remove decks that another teacher has created. Only teachers are able to add new persons or events to the database.
 
-Some security aspects are still under construction. (using cfr_token is not quite yet finished)
+Making modifications to the eisting events is not yet possible. This feature will likely be added to the final version.
