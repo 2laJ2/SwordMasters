@@ -65,12 +65,12 @@ def send_answer(card_id, answer, user_id):
     db.session.commit()
 
 def get_event(name):
-    sql = "SELECT EXISTS(SELECT life FROM events WHERE word2=:soke)"
-    result = db.session.execute(sql, {"soke":name}).fetchone()[0]
+    sql = "SELECT EXISTS(SELECT life FROM events WHERE word2=:name)"
+    result = db.session.execute(sql, {"name":name}).fetchone()[0]
     if result == 0:
         return "Not found"
-    sql = "SELECT life FROM events WHERE word2=:soke"
-    result = db.session.execute(sql, {"soke":name}).fetchone()[0]
+    sql = "SELECT life FROM events WHERE word2=:name"
+    result = db.session.execute(sql, {"name":name}).fetchone()[0]
     return result
 
 def add_event(name, event):

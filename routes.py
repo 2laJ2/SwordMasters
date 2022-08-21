@@ -167,7 +167,8 @@ def newevent():
     words = request.form["words"]
     if name == "" or words == "":
         return render_template("error.html", message="The name of the person or event or the story are missing")
-    if decks.get_event(name):
+    search = decks.get_event(name)
+    if search != "Not found":
         return render_template("error.html", message="The name of the person or event is already taken")
     decks.add_event(name, words)
     return redirect("/explore")
