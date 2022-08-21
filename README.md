@@ -6,15 +6,15 @@ The ancient martial art of iaido dates back to about 1200 ad. The origin of iaid
 
 #### Features of this app include:
 
-- user may log in. log out or create a new user (Done)
-- the student may explore the database (Under construction)
-- the student may memorize data with card decks, e.g. all the Soke of a specified lineage (Deck info visible, game under construction))
-- the student can see statistics of the learning progress (Under construction)
-- the teacher may create new card decks with a special purpose, e.g. learning names, dates, relationships, events etc. (Done)
-- the teacher can see statistics of the learning progress of the student (Under construction)
+- user may log in. log out or create a new user
+- the student may explore the database
+- the student may memorize data with card decks, e.g. all the Soke of a specified lineage
+- the student can see statistics of the learning progress
+- the teacher may create new card decks with a special purpose, e.g. learning names, dates, relationships, events etc.
+- the teacher can see statistics of the learning progress of the students
 
-The app will be available for testing in [Heroku](https://swordmasters.herokuapp.com/). (Done)
+The app is available for testing in [Heroku](https://swordmasters.herokuapp.com/).
 
-The user can see all decks created but may not remove decks that another user has created. The app does not yet assign/apply teacher roles. All users will be assigned student roles. Later, only teachers will be able to create decks and remove decks.
+Any user can see all the decks created. Only teachers are able to create and remove decks, but may not remove decks that another teacher has created. Only teachers are able to add new persons or events to the database.
 
-Some security aspects are still under construction.
+Some security aspects are still under construction. (using cfr_token is not quite yet finished)
