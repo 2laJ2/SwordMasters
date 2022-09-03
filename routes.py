@@ -55,26 +55,12 @@ def register():
             return render_template("error.html", message="Please confirm the password correctly")
         if role not in ("1", "2"):
             return render_template("error.html", message="User role unknown")
-        # check username
-        sql = "SELECT id, password, role FROM users WHERE username=:username"
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()    
+        user = users.check_username(username)
         if user:
-        # invalid username
             return render_template("error.html", message="The username is already taken")
-        hash_value = generate_password_hash(password1)
-        sql = "INSERT INTO users (username, password, role) VALUES (:username, :password, :role)"
-        db.session.execute(sql, {"username":username, "password":hash_value, "role":role})
-        db.session.commit()
-        session["username"] = username
-        sql = "SELECT id, password, role FROM users WHERE username=:username"
-        resultnewuser = db.session.execute(sql, {"username":username})
-        newuser = resultnewuser.fetchone()
-        if not newuser or len(newuser) != 3:
+        create = users.create_user(username, password1, role)
+        if create == False:
             return render_template("error.html", message="Registering unsuccessful")
-        session["user_id"] = newuser[0]
-        session["user_role"] = newuser[2]
-        session["csrf_token"] = os.urandom(16).hex()
         return render_template("index.html")       
 
 @app.route("/logout")
