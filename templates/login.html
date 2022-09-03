@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Front page{% endblock %}
+{% block content %}
+<h2>Please log in here:</h2>
+
+{% if session.username %}
+<p>You have logged in as {{ session.username }}</p>
+<h3><a href="/decklist">Game</a></h1><h3>
+<h3><a href="/explore">Explore</a></h3>
+<h3><a href="/logout">Log out</a></h3>
+{% else %}
+<form action="/login" method="POST">
+<p>Username:<br>
+<input type="text" name="username" minlength="5" maxlength="20"></p>
+<p>Password:<br>
+<input type="password" name="password" minlength="5" maxlength="20"></p>
+<input type="submit" value="Log in">
+<br>
+<br>Create a new user account here: </br>
+<br><a href="/register">Register</a>
+</form>
+{% endif %}
+{% endblock %}

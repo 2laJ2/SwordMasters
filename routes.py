@@ -11,14 +11,17 @@ import os
 def index():
     return render_template("index.html")
 
-@app.route("/login",methods=["POST"])
+@app.route("/login",methods=["get", "post"])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
-    # check username and password
-    sql = "SELECT id, password, role FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()    
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        # check username and password
+        sql = "SELECT id, password, role FROM users WHERE username=:username"
+        result = db.session.execute(sql, {"username":username})
+        user = result.fetchone()    
     if not user or username == "":
         # invalid username
         return render_template("error.html", message="The user does not exist")
@@ -93,17 +96,24 @@ def explore():
 def add_deck():
     users.require_role(2)
     if request.method == "GET":
-        return render_template("add.html", message="")
+        return render_template("add.html")
     if request.method == "POST":
         users.check_csrf()
         name = request.form["name"]
+        words = request.form["words"]
         if len(name) < 1 or len(name) >25:
             return render_template("error.html", message="The deck name should consist of 1-25 characters")
-        words = request.form["words"]
         if len(words) < 3 or ";" not in words:
             return render_template("error.html", message="The deck must contain at least one card")
         if len(words) > 10000:
             return render_template("error.html", message="The list is too long")
+        # check if deck name unique
+        sql = "SELECT id, name, visible FROM decks WHERE name=:name ORDER BY visible DESC"
+        result = db.session.execute(sql, {"name":name})
+        deck = result.fetchone()    
+        if deck and deck[2] == 1:
+            # invalid deck name
+            return render_template("error.html", message="The deck name is already taken")
         deck_id = decks.add_deck(name, words, users.user_id())
         return redirect("/deck/"+str(deck_id))
 

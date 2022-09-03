@@ -4,9 +4,9 @@
 <h2>Register a new user</h2>
 
 <form action="/register" method="post">
-Username: <br><input type="text" name="username">
+Username: <br><input type="text" name="username" minlength="5" maxlength="20">
 <p>
-Password: <br><input type="password" name="password1">
+Password: <br><input type="password" name="password1" minlength="5" maxlength="20">
 <p>
 Confirm password: <br><input type="password" name="password2">
 <p>
