@@ -90,7 +90,7 @@ def deck():
 
 @app.route("/explore")
 def explore():
-    return render_template("explore.html")
+    return render_template("explore.html", message="Let's find something exciting!")
 
 @app.route("/add", methods=["get", "post"])
 def add_deck():
@@ -108,11 +108,8 @@ def add_deck():
         if len(words) > 10000:
             return render_template("error.html", message="The list is too long")
         # check if deck name unique
-        sql = "SELECT id, name, visible FROM decks WHERE name=:name ORDER BY visible DESC"
-        result = db.session.execute(sql, {"name":name})
-        deck = result.fetchone()    
-        if deck and deck[2] == 1:
-            # invalid deck name
+        search = decks.is_deck_name_available(name)
+        if search != "Valid":
             return render_template("error.html", message="The deck name is already taken")
         deck_id = decks.add_deck(name, words, users.user_id())
         return redirect("/deck/"+str(deck_id))
@@ -162,7 +159,7 @@ def result():
 def events():
     answer = request.form["answer"].strip()
     if answer == "":
-        return redirect("/explore")
+        return redirect("/explore", message="Let's find something exciting!")
     info = decks.get_event(answer)
     return render_template("event.html", name=answer, info=info)
 
@@ -181,7 +178,7 @@ def newevent():
     if search != "Not found":
         return render_template("error.html", message="The name of the person or event is already taken")
     decks.add_event(name, words)
-    return redirect("/explore")
+    return render_template("explore.html", message="New person or event added successfully!")
 
 @app.route("/stats")
 def show_stats():

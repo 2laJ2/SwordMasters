@@ -22,6 +22,14 @@ def get_my_decks(user_id):
              WHERE creator_id=:user_id AND visible=1 ORDER BY name"""
     return db.session.execute(sql, {"user_id":user_id}).fetchall()
 
+def is_deck_name_available(name):
+    sql = "SELECT id, name, visible FROM decks WHERE name=:name ORDER BY visible DESC"
+    result = db.session.execute(sql, {"name":name})
+    deck = result.fetchone()    
+    if deck and deck[2] == 1:
+        return "Invalid"
+    return "Valid"
+
 def add_deck(name, words, creator_id):
     sql = """INSERT INTO decks (creator_id, name, visible)
              VALUES (:creator_id, :name, 1) RETURNING id"""
