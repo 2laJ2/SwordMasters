@@ -11,41 +11,35 @@ import os
 def index():
     return render_template("index.html")
 
-@app.route("/login",methods=["get", "post"])
+@app.route("/login",methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        # check username and password
-        sql = "SELECT id, password, role FROM users WHERE username=:username"
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()    
+        username = request.form["username"].strip()
+        password = request.form["password"].strip()
+        user = users.check_username(username)
     if not user or username == "":
-        # invalid username
         return render_template("error.html", message="The user does not exist")
     else:
-        hash_value = user.password
+        hash_value = user[1]
         if check_password_hash(hash_value, password):
-        # correct username and password
             session["username"] = username
             session["user_id"] = user[0]
             session["user_role"] = user[2]
             session["csrf_token"] = os.urandom(16).hex()
             return render_template("index.html")
         else:
-            # invalid password
             return render_template("error.html", message="The username and password do not match")
 
-@app.route("/register", methods=["get", "post"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")
     if request.method == "POST":
-        username = request.form["username"]
-        password1 = request.form["password1"]
-        password2 = request.form["password2"]
+        username = request.form["username"].strip()
+        password1 = request.form["password1"].strip()
+        password2 = request.form["password2"].strip()
         role = request.form["role"]
         if len(username) < 5 or len(username) > 20 or len(password1) < 5 or len(password1) > 20:
             return render_template("error.html", message="The username and password must contain 5 - 20 characters")
@@ -85,8 +79,8 @@ def add_deck():
         return render_template("add.html")
     if request.method == "POST":
         users.check_csrf()
-        name = request.form["name"]
-        words = request.form["words"]
+        name = request.form["name"].strip()
+        words = request.form["words"].strip()
         if len(name) < 1 or len(name) >25:
             return render_template("error.html", message="The deck name should consist of 1-25 characters")
         if len(words) < 3 or ";" not in words:
@@ -156,8 +150,8 @@ def addevent():
 @app.route("/newevent", methods=["post"])
 def newevent():
     users.require_role(2)
-    name = request.form["name"]
-    words = request.form["words"]
+    name = request.form["name"].strip()
+    words = request.form["words"].strip()
     if name == "" or words == "":
         return render_template("error.html", message="The name of the person or event or the story are missing")
     search = decks.get_event(name)
