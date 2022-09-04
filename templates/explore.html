@@ -10,13 +10,19 @@
 <br>
 <input type="text" name="answer">
 </p>
-
 <input type="submit" value="Submit">
 <br>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-
 </form>
-
+<br>
+<a href="/">Front page</a>
+<br>
+<ul>
+{% for event in events %}
+<li>{{ event.word2 }}</li>
+{% endfor %}
+</ul>
+<br>
+<br>
 {% endif %}
-<br><a href="/">Front page</a>
 {% endblock %}

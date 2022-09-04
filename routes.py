@@ -3,6 +3,7 @@ from flask import redirect, render_template, abort, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import users
 import decks
+import events
 import stats
 from db import db
 import os
@@ -70,9 +71,9 @@ def deck():
 
 @app.route("/explore")
 def explore():
-    return render_template("explore.html", message="Let's find something exciting!")
+    return render_template("explore.html", events=events.get_all_events(), message="Let's find something exciting!")
 
-@app.route("/add", methods=["get", "post"])
+@app.route("/add", methods=["GET", "POST"])
 def add_deck():
     users.require_role(2)
     if request.method == "GET":
@@ -88,13 +89,13 @@ def add_deck():
         if len(words) > 10000:
             return render_template("error.html", message="The list is too long")
         # check if deck name unique
-        search = decks.is_deck_name_available(name)
+        search = decks.check_deck_name_availability(name)
         if search != "Valid":
             return render_template("error.html", message="The deck name is already taken")
         deck_id = decks.add_deck(name, words, users.user_id())
         return redirect("/deck/"+str(deck_id))
 
-@app.route("/remove", methods=["get", "post"])
+@app.route("/remove", methods=["GET", "POST"])
 def remove_deck():
     users.require_role(2)
     if request.method == "GET":
@@ -122,42 +123,42 @@ def play(deck_id):
     info = decks.get_deck_info(deck_id)
     return render_template("play.html", deck_id=deck_id, card_id=card[0], question=card[1], name=info[0])
 
-@app.route("/result", methods=["post"])
+@app.route("/result", methods=["POST"])
 def result():
     users.require_role(1)
     users.check_csrf()
     deck_id = request.form["deck_id"]
     card_id = request.form["card_id"]
     info = decks.get_deck_info(deck_id) 
-    answer = request.form["answer"].strip()
+    answer = request.form["answer"].strip().title()
     decks.send_answer(card_id, answer, users.user_id())
     words = decks.get_card_words(card_id)
     return render_template("result.html", deck_id=deck_id, question=words[0],
-                           answer=answer, correct=words[1], name=info[0])
+                           answer=answer, correct=words[1].title(), name=info[0])
 
-@app.route("/event", methods=["post"])
-def events():
+@app.route("/event", methods=["POST"])
+def event():
     answer = request.form["answer"].strip()
     if answer == "":
         return redirect("/explore", message="Let's find something exciting!")
-    info = decks.get_event(answer)
+    info = events.get_event(answer)
     return render_template("event.html", name=answer, info=info)
 
 @app.route("/addevent")
 def addevent():
     return render_template("newevent.html")
 
-@app.route("/newevent", methods=["post"])
+@app.route("/newevent", methods=["POST"])
 def newevent():
     users.require_role(2)
     name = request.form["name"].strip()
     words = request.form["words"].strip()
     if name == "" or words == "":
         return render_template("error.html", message="The name of the person or event or the story are missing")
-    search = decks.get_event(name)
+    search = events.get_event(name)
     if search != "Not found":
         return render_template("error.html", message="The name of the person or event is already taken")
-    decks.add_event(name, words)
+    events.add_event(name, words)
     return render_template("explore.html", message="New person or event added successfully!")
 
 @app.route("/stats")

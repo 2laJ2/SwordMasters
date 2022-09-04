@@ -7,8 +7,8 @@
 
 <form action="/result" method="post">
 
-<p>Who is the <b>{{ question }}</b>th Soke of the <br><b>{{ name }}</b> lineage?
-
+<p>Who is the <b>{{ question }}</b>th Soke of the <br><br><b>{{ name }}</b> lineage?
+<br>
 <br>
 <input type="text" name="answer">
 </p>
@@ -16,6 +16,7 @@
 <input type="hidden" name="card_id" value="{{ card_id }}">
 
 <input type="submit" value="Submit">
+<br>
 <br>
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
